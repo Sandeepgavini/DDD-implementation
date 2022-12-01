@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace Shopping.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    [Authorize]
+
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
@@ -27,7 +27,7 @@ namespace Shopping.API.Controllers
 
         }
 
-        [HttpGet("GetById/{customerId}")]
+        [HttpGet("{customerId}")]
         public IActionResult GetCustomerById([FromRoute]int customerId)
         {
             var customer = _customerService.GetCustomerById(customerId);

@@ -40,8 +40,6 @@ namespace Shopping.Infrastructure.Repositories
             if (customer == null)
                 return null;
             customer.AddProduct(productName,productPrice,customerId);
-            var product = new Product(productName, productPrice, customerId);
-            _shoppingContext.Products.Add(product);
             _shoppingContext.Customers.Update(customer);
             _shoppingContext.SaveChanges();
             return customer;

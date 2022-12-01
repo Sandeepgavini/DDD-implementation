@@ -14,6 +14,9 @@ using System;
 using Shopping.App;
 using Shopping.Domain;
 using Shopping.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Shopping.API
 {
@@ -29,7 +32,8 @@ namespace Shopping.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication();
+
+            // Injecting the EF Core into the services
             services.AddEntityFrameworkSqlServer()
               .AddDbContext<ShoppingContext>(options =>
               {
@@ -45,6 +49,8 @@ namespace Shopping.API
                   ServiceLifetime.Scoped  //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
               );
             services.AddScoped<DbContext>(x => x.GetRequiredService<ShoppingContext>());
+
+            // Versioning the API for major changes and bug fixes
             services.AddApiVersioning(options =>
                 options.ReportApiVersions = true);
             services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
@@ -55,12 +61,7 @@ namespace Shopping.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopping.API", Version = "v1" });
             });
 
-            // To configure dependencies in Assembly use Scrutor  
-            /* services.AddScoped<ICustomerRepository, CustomerRepository>();
-             services.AddScoped<IProductRepository, ProductRepository>();
-             services.AddScoped < IProductService, ProductService>();
-             services.AddScoped<ICustomerService, CustomerService>();*/
-
+          // Using Scrutor to configure services from the Assembly
             services.Scan(scan => scan
             .FromAssemblies(ShoppingDomain.Assembly,
             ShoppingApplication.Assembly,
@@ -70,6 +71,13 @@ namespace Shopping.API
             .WithScopedLifetime()
             );
 
+            // Activating CORs for the API
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowAllOrigin", options => options.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,8 +93,6 @@ namespace Shopping.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
