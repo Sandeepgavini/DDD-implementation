@@ -5,7 +5,7 @@ using Shopping.Domain.Entities;
 
 namespace Shopping.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
