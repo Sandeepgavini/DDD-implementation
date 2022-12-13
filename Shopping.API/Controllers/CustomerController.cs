@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Shopping.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
 
     public class CustomerController : ControllerBase

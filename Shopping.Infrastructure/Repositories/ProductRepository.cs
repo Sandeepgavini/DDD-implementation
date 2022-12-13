@@ -1,4 +1,5 @@
-﻿using Shopping.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Shopping.Domain.Entities;
 using Shopping.Domain.Repository;
 using Shopping.Infrastructure.Context;
 using System.Collections.Generic;
@@ -24,11 +25,11 @@ namespace Shopping.Infrastructure.Repositories
 
         public List<Product> GetAllProducts()
         {
-            return _shoppingContext.Products.ToList();
+            return _shoppingContext.Products.Include(x=>x.Customer).ToList();
         }
         public bool CheckForProduct(int productId)
         {
-            return _shoppingContext.Products.Any(x => x.ProductId == productId);
+            return _shoppingContext.Products.FirstOrDefault(x => x.ProductId == productId) == null;
         }
     }
 }

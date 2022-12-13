@@ -21,7 +21,16 @@ namespace Shopping.Domain.Entities
             ProductName = productName;
             ProductPrice = productPrice;
             CustomerId = customerId;
-           
+            
+
+        }
+        public Product(string productName, double productPrice,Customer customer)
+        {
+
+            ProductName = productName;
+            ProductPrice = productPrice;
+            Customer = customer;
+
 
         }
     }
