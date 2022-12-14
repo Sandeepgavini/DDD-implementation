@@ -1,4 +1,5 @@
-﻿using Shopping.Domain.Entities;
+﻿using Shopping.Domain.DTO;
+using Shopping.Domain.Entities;
 using System.Collections.Generic;
 
 namespace Shopping.Domain.Repository
@@ -7,6 +8,6 @@ namespace Shopping.Domain.Repository
     {
         List<Product> GetAllProducts();
         bool CheckForProduct(int productId);
-        List<Product> GetProductsByCustomerId(int customerId);
+        List<ProductDTO> GetProductsByCustomerId(int customerId);
     }
 }

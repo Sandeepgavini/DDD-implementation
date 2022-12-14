@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Shopping.Domain.DTO;
 using Shopping.Domain.Entities;
 using Shopping.Domain.Repository;
 using Shopping.Infrastructure.Context;
@@ -17,10 +18,16 @@ namespace Shopping.Infrastructure.Repositories
         }
 
      
-        public List<Product> GetProductsByCustomerId(int customerId)
+        public List<ProductDTO> GetProductsByCustomerId(int customerId)
         {
-            var products = _shoppingContext.Products.Where(x => x.CustomerId == customerId).ToList();
-            return products;
+            var products = _shoppingContext.Products.Where(x => x.Customer.CustomerId == customerId).ToList();
+            var productDtos = new List<ProductDTO>();
+            foreach (var product in products)
+            {
+                var productDto = new ProductDTO(product.ProductId, product.ProductName, product.ProductPrice);
+                productDtos.Add(productDto);
+            }
+            return productDtos;
         }
 
         public List<Product> GetAllProducts()

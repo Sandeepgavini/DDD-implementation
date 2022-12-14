@@ -11,16 +11,13 @@ namespace Shopping.Domain.Entities
         public int ProductId { get; set; }
         public string ProductName { get;  set; }
         public double ProductPrice { get;  set; }
-        public int CustomerId { get; set; }
-        
         public Customer Customer { get; set; }  
         public Product() { }
-        public Product(string productName, double productPrice,int customerId)
+        public Product(string productName, double productPrice)
         {
 
             ProductName = productName;
             ProductPrice = productPrice;
-            CustomerId = customerId;
             
 
         }

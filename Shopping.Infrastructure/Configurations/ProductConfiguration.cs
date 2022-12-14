@@ -14,7 +14,6 @@ namespace Shopping.Infrastructure.Configurations
             builder.Property(x => x.ProductPrice).IsRequired();
             builder.HasOne(p => p.Customer)
                  .WithMany(c => c.PurchasedProducts)
-                 .HasForeignKey(p => p.CustomerId)
                  .OnDelete(DeleteBehavior.Cascade);
         }
     }

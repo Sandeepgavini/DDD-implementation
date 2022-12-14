@@ -1,4 +1,5 @@
-﻿using Shopping.Domain.Entities;
+﻿using Shopping.Domain.DTO;
+using Shopping.Domain.Entities;
 using Shopping.Domain.Repository;
 using System.Collections.Generic;
 
@@ -17,7 +18,7 @@ namespace Shopping.App.Services
         {
             return _productRepository.GetAllProducts();
         }
-        public List<Product> GetProductsByCustomerId(int customerId)
+        public List<ProductDTO> GetProductsByCustomerId(int customerId)
         {
             return _productRepository.GetProductsByCustomerId(customerId);
         }

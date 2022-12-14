@@ -10,10 +10,11 @@ namespace Shopping.Infrastructure.Repositories
     public class CustomerRepository:ICustomerRepository
     {
         private readonly ShoppingContext _shoppingContext;
-
-        public CustomerRepository(ShoppingContext shoppingContext)
+        private readonly IProductRepository _productRepository;
+        public CustomerRepository(ShoppingContext shoppingContext, IProductRepository productRepository)
         {
             _shoppingContext = shoppingContext;
+            _productRepository = productRepository;
         }
 
         public List<Customer> GetAllCustomers()
@@ -39,9 +40,11 @@ namespace Shopping.Infrastructure.Repositories
             var customer = GetCustomerById(customerId);
             if (customer == null)
                 return null;
-            customer.AddProduct(productName,productPrice,customerId);
+            customer.AddProduct(productName,productPrice);
             _shoppingContext.Customers.Update(customer);
             _shoppingContext.SaveChanges();
+          /*  var products = _productRepository.GetProductsByCustomerId(customerId);
+            customer.AddProductsToList(products);*/
             return customer;
         }
     }

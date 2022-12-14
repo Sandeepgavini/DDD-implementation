@@ -1,4 +1,5 @@
-﻿using Shopping.Domain.Entities;
+﻿using Shopping.Domain.DTO;
+using Shopping.Domain.Entities;
 using System.Collections.Generic;
 
 namespace Shopping.App.Services
@@ -8,6 +9,6 @@ namespace Shopping.App.Services
        
         bool CheckForProduct(int productId);
         List<Product> GetAllProducts();
-        List<Product> GetProductsByCustomerId(int customerId);
+        List<ProductDTO> GetProductsByCustomerId(int customerId);
     }
 }

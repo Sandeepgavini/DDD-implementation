@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Shopping.Domain.DTO;
+using System.Collections.Generic;
 
 namespace Shopping.Domain.Entities
 {
@@ -7,26 +8,28 @@ namespace Shopping.Domain.Entities
         public int CustomerId { get; private set; }
         public string CustomerName { get; private set; }
         public List<Product> PurchasedProducts = new List<Product>();
-        /*private List<Product> _purchasedProducts;
-        public IReadOnlyCollection<Product> PurchasedProducts => _purchasedProducts;*/
+        /* public List<ProductDTO> Products { get; set; }
+           private List<Product> _purchasedProducts;
+           public IReadOnlyCollection<Product> PurchasedProducts => _purchasedProducts;*/
         public double TotalBill { get; private set; } 
        public Customer() { }
         public Customer(string customerName)
         {
-            //_purchasedProducts = new List<Product>();
             CustomerName = customerName;
             TotalBill = 0;
-            
         }
      
-        public void AddProduct(string productName,double productPrice,int customerId)
+        public void AddProduct(string productName,double productPrice)
         {
-            var product = new Product(productName, productPrice, customerId);
-            //_purchasedProducts.Add(product);
+            var product = new Product(productName, productPrice);
             PurchasedProducts.Add(product);
             TotalBill += product.ProductPrice;
         }
-      
+/*
+        public void AddProductsToList(List<ProductDTO> products)
+        {
+            Products = products;
+        }*/
        
     }
 }
