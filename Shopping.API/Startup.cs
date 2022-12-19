@@ -5,18 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Shopping.App.Services;
-using Shopping.Domain.Repository;
 using Shopping.Infrastructure.Context;
-using Shopping.Infrastructure.Repositories;
 using System.Reflection;
 using System;
 using Shopping.App;
 using Shopping.Domain;
 using Shopping.Infrastructure;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Shopping.API
 {
