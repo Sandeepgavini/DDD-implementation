@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shopping.Infrastructure.Context;
 
 namespace Shopping.API.Migrations
 {
     [DbContext(typeof(ShoppingContext))]
-    partial class ShoppingContextModelSnapshot : ModelSnapshot
+    [Migration("20221219114045_Updated-Customer-Relationships")]
+    partial class UpdatedCustomerRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,10 +50,7 @@ namespace Shopping.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CustomerId1")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductName")
@@ -65,8 +64,6 @@ namespace Shopping.API.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("CustomerId1");
-
                     b.ToTable("Products");
                 });
 
@@ -75,20 +72,13 @@ namespace Shopping.API.Migrations
                     b.HasOne("Shopping.Domain.Entities.Customer", "Customer")
                         .WithMany("PurchasedProducts")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Shopping.Domain.Entities.Customer", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CustomerId1");
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Shopping.Domain.Entities.Customer", b =>
                 {
-                    b.Navigation("Products");
-
                     b.Navigation("PurchasedProducts");
                 });
 #pragma warning restore 612, 618

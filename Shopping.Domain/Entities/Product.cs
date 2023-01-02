@@ -12,6 +12,8 @@ namespace Shopping.Domain.Entities
         public string ProductName { get;  set; }
         public double ProductPrice { get;  set; }
         public Customer Customer { get; set; }  
+
+        public int CustomerId { get; set; }
         public Product() { }
         public Product(string productName, double productPrice)
         {

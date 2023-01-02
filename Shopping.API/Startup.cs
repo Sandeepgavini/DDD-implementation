@@ -49,7 +49,8 @@ namespace Shopping.API
                 options.ReportApiVersions = true);
             services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options=>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopping.API", Version = "v1" });

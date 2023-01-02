@@ -13,7 +13,8 @@ namespace Shopping.Infrastructure.Configurations
             builder.Property(x => x.ProductName).IsRequired();
             builder.Property(x => x.ProductPrice).IsRequired();
             builder.HasOne(p => p.Customer)
-                 .WithMany(c => c.PurchasedProducts)
+                 .WithMany(c => c.Products)
+                 .HasForeignKey(p => p.CustomerId)
                  .OnDelete(DeleteBehavior.Cascade);
         }
     }
