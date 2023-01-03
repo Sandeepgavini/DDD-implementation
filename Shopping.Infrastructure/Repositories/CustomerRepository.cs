@@ -1,4 +1,5 @@
 ﻿using Castle.Core.Resource;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Domain.Entities;
 using Shopping.Domain.Repository;
@@ -6,17 +7,16 @@ using Shopping.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Shopping.Infrastructure.Repositories
 {
     public class CustomerRepository:ICustomerRepository
     {
         private readonly ShoppingContext _shoppingContext;
-        private readonly IProductRepository _productRepository;
-        public CustomerRepository(ShoppingContext shoppingContext, IProductRepository productRepository)
+        public CustomerRepository(ShoppingContext shoppingContext)
         {
             _shoppingContext = shoppingContext;
-            _productRepository = productRepository;
         }
 
         public List<Customer> GetAllCustomers()
@@ -29,6 +29,7 @@ namespace Shopping.Infrastructure.Repositories
             var customer = _shoppingContext.Customers.Where(customer => customer.CustomerId == customerId).Include(customer=>customer.Products).AsNoTracking().FirstOrDefault();
             return customer;
         }
+
         public Customer AddCustomer(string customerName)
         {
             var customer = new Customer(customerName);
@@ -45,9 +46,12 @@ namespace Shopping.Infrastructure.Repositories
             customer.AddProduct(productName,productPrice);
             _shoppingContext.Customers.Update(customer);
             _shoppingContext.SaveChanges();
-          /*  var products = _productRepository.GetProductsByCustomerId(customerId);
-            customer.AddProductsToList(products);*/
             return customer;
+        }
+
+        public Customer GetCustomerByFilter(Expression<Func<Customer, bool>> predicate)
+        {
+            return _shoppingContext.Customers.Where(predicate).Include(customer => customer.Products).AsNoTracking().FirstOrDefault();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Shopping.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [ApiVersion("1.0")]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
@@ -18,7 +18,6 @@ namespace Shopping.API.Controllers
         {
             _customerService = customerService;
         }
-
         [HttpGet]
         public IActionResult GetAllCustomers()
         {
@@ -26,22 +25,24 @@ namespace Shopping.API.Controllers
             return Ok(customers);
 
         }
-
-        [HttpGet("{customerId}")]
-        public IActionResult GetCustomerById([FromRoute]int customerId)
+        [Route("{customerIdentifier}")]
+        [HttpGet]
+        public IActionResult GetCustomerDetails([FromRoute] string customerIdentifier)
         {
-            var customer = _customerService.GetCustomerById(customerId);
-            if(customer == null)
+            var customer = _customerService.GetCustomerDetails(customerIdentifier);
+            if (customer == null)
                 return NotFound();
             return Ok(customer);
         }
-        [HttpPost("{customerName}")]
+        [Route("{customerName}")]
+        [HttpPost]
         public IActionResult AddCustomer( [FromRoute]string customerName)
         {
             var customer = _customerService.AddCustomer( customerName);  
             return Ok(customer);
         }
-        [HttpPost("{customerId}/{productName}/{productPrice}")]
+        [Route("{customerId}/{productName}/{productPrice}")]
+        [HttpPost]
         public IActionResult AddProductToCustomer([FromRoute]int customerId, [FromRoute] string productName,[FromRoute] double productPrice)
         {
             var customer = _customerService.AddProductToCustomer(customerId, productName,productPrice);
@@ -49,5 +50,6 @@ namespace Shopping.API.Controllers
                 return BadRequest();
             return Ok(customer);
         }
+       
     }
 }

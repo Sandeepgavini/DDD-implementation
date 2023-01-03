@@ -17,10 +17,19 @@ namespace Shopping.App.Services
         {
             return _customerRepository.GetAllCustomers();
         }
-        public Customer GetCustomerById(int customerId)
+
+        public Customer GetCustomerDetails(string customerIdentifier)
         {
-            return _customerRepository.GetCustomerById(customerId);
-       
+            try
+            {
+                int customerId = int.Parse(customerIdentifier);
+                return _customerRepository.GetCustomerByFilter(x=>x.CustomerId == customerId);
+            }
+            catch(Exception e)
+            {
+                return _customerRepository.GetCustomerByFilter(x => x.CustomerName == customerIdentifier);
+            }
+            
         }
         public Customer AddCustomer( string customerName)
         {

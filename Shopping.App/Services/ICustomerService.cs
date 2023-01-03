@@ -8,6 +8,6 @@ namespace Shopping.App.Services
         Customer AddCustomer( string customerName);
         Customer AddProductToCustomer(int customerId, string productName, double productPrice);
         List<Customer> GetAllCustomers();
-        Customer GetCustomerById(int customerId);
+        Customer GetCustomerDetails(string customerId);
     }
 }

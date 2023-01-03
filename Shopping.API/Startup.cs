@@ -11,6 +11,7 @@ using System;
 using Shopping.App;
 using Shopping.Domain;
 using Shopping.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Shopping.API
 {
@@ -46,7 +47,11 @@ namespace Shopping.API
 
             // Versioning the API for major changes and bug fixes
             services.AddApiVersioning(options =>
-                options.ReportApiVersions = true);
+            {
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = true;
+            });
             services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
 
             services.AddControllers().AddNewtonsoftJson(options=>
