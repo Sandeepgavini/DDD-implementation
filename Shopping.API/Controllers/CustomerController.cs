@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shopping.App.Services;
-using Shopping.Domain.Entities;
-using System.Collections.Generic;
 
 namespace Shopping.API.Controllers
 {

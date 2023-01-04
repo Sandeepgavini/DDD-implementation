@@ -91,7 +91,7 @@ namespace Shopping.API
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors("AllowAllOrigin");
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
