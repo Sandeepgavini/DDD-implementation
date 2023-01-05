@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shopping.Infrastructure.Context;
 
 namespace Shopping.API.Migrations
 {
     [DbContext(typeof(ShoppingContext))]
-    partial class ShoppingContextModelSnapshot : ModelSnapshot
+    [Migration("20230105130811_Modified Customer Entity")]
+    partial class ModifiedCustomerEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,8 +36,8 @@ namespace Shopping.API.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("Mathew Arnold");
 
-                    b.Property<string>("CustomerNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CustomerNumber")
+                        .HasColumnType("int");
 
                     b.Property<double>("Discount")
                         .HasColumnType("float");

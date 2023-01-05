@@ -14,10 +14,10 @@ namespace Shopping.App.Services
             _productRepository = productRepository;
         }
 
-        public List<ProductDTO> GetAllProducts()
+        public List<ProductViewDTO> GetAllProducts()
         {
             var products = _productRepository.GetAllProducts();
-            return MapProductToDTO(products);
+            return MapProductViewToDTO(products);
         }
 
         public List<ProductDTO> GetProductsByCustomerId(int customerId)
@@ -40,6 +40,17 @@ namespace Shopping.App.Services
                 productDtos.Add(productDto);
             }
             return productDtos;
+        }
+
+        public List<ProductViewDTO> MapProductViewToDTO(List<Product> products)
+        {
+            var productViewDtos = new List<ProductViewDTO>();
+            foreach (var product in products)
+            {
+                var productDto = new ProductViewDTO(product.CustomerId, product.Customer.CustomerName,product.ProductId, product.ProductName, product.ProductPrice);
+                productViewDtos.Add(productDto);
+            }
+            return productViewDtos;
         }
     }
 }

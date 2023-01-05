@@ -30,30 +30,46 @@ namespace Shopping.Infrastructure.Repositories
             return customer;
         }
 
-        public Customer AddCustomer(string customerName)
+        public Customer AddCustomer(Customer customer)
         {
-            var customer = new Customer(customerName);
             _shoppingContext.Customers.Add(customer);
             _shoppingContext.SaveChanges();
             return customer;
         }
 
-        public Customer AddProductToCustomer(int customerId, string productName, double productPrice)
+        public Customer AddProductToCustomer(int customerId, Product product)
         {
             var customer = GetCustomerById(customerId);
-            if (customer == null)
-            {
-                return null;
-            }
-            customer.AddProduct(productName,productPrice);
+            customer.AddProductsToList(product);
             _shoppingContext.Customers.Update(customer);
             _shoppingContext.SaveChanges();
             return customer;
         }
 
+        public Customer UpdateCustomerInfo(int customerId, Customer customerInfo)
+        {
+            var customer = GetCustomerById(customerId);
+            customer.CustomerNumber = customerInfo.CustomerNumber;
+            _shoppingContext.Customers.Update(customer);
+            _shoppingContext.SaveChanges();
+            return customer;
+        }
+
+        public bool DeleteCustomer(int customerId)
+        {
+            var customer = GetCustomerById(customerId);
+            if(customer != null)
+            {
+                _shoppingContext.Customers.Remove(customer);
+                _shoppingContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         public Customer GetCustomerByFilter(Expression<Func<Customer, bool>> predicate)
         {
-            return _shoppingContext.Customers.Where(predicate).Include(customer => customer.Products).AsNoTracking().FirstOrDefault();
+            return _shoppingContext.Customers.Where(predicate).Include(customer => customer.Products).FirstOrDefault();
         }
     }
 }

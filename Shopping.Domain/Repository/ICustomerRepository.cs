@@ -7,8 +7,10 @@ namespace Shopping.Domain.Repository
 {
     public interface ICustomerRepository
     {
-         Customer AddCustomer( string customerName);
-         Customer AddProductToCustomer(int customerId, string productName, double productPrice);
+         Customer AddCustomer(Customer customer);
+         Customer UpdateCustomerInfo(int customerId,Customer customerInfo);
+         bool DeleteCustomer(int customerId);
+         Customer AddProductToCustomer(int customerId, Product product);
          List<Customer> GetAllCustomers();
          Customer GetCustomerById(int customerId);
          Customer GetCustomerByFilter(Expression<Func<Customer, bool>> predicate);

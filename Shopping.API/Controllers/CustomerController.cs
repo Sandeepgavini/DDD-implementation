@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopping.App.Services;
+using Shopping.Domain.Common;
+using Shopping.Domain.DTO;
+using Shopping.Domain.Entities;
 
 namespace Shopping.API.Controllers
 {
@@ -29,30 +32,50 @@ namespace Shopping.API.Controllers
             var customer = _customerService.GetCustomerDetails(customerIdentifier);
             if (customer == null)
             {
-                return NotFound();
+                return NotFound(Constant.NOUSER);
             }
             return Ok(customer);
         }
 
-        [Route("{customerName}")]
+        [Route("AddUser")]
         [HttpPost]
-        public IActionResult AddCustomer( [FromRoute]string customerName)
+        public IActionResult AddCustomer( [FromBody]CustomerDTO customer)
         {
-            var customer = _customerService.AddCustomer( customerName);  
-            return Ok(customer);
+            var newCustomer = _customerService.AddCustomer( customer);  
+            return Ok(newCustomer);
         }
 
-        [Route("{customerId}/{productName}/{productPrice}")]
+
+        [Route("{customerId}")]
         [HttpPost]
-        public IActionResult AddProductToCustomer([FromRoute]int customerId, [FromRoute] string productName,[FromRoute] double productPrice)
+        public IActionResult AddProductToCustomer([FromRoute]int customerId, [FromBody] ProductDTO product)
         {
-            var customer = _customerService.AddProductToCustomer(customerId, productName,productPrice);
+            var customer = _customerService.AddProductToCustomer(customerId, product);
             if (customer == null)
             {
-                return BadRequest();
+                return BadRequest(Constant.NOUSER);
             }
             return Ok(customer);
         }
-       
+
+        [Route("Update/{customerId}")]
+        [HttpPut]
+        public IActionResult UpdateCustomerInfo([FromRoute] int customerId, [FromBody] CustomerDTO customer)
+        {
+            var newCustomer = _customerService.UpdateCustomerInfo(customerId, customer);
+            return Ok(newCustomer);
+        }
+
+        [Route("Delete/{customerId}")]
+        [HttpDelete]
+        public IActionResult DeleteUserInfo([FromRoute] int customerId)
+        {
+            var isDeleted = _customerService.DeleteCustomer(customerId);
+            if (!isDeleted)
+            {
+                return BadRequest(Constant.NOUSER);
+            }
+            return Ok();
+        }
     }
 }
