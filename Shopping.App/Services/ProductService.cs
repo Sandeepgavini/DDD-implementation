@@ -14,19 +14,32 @@ namespace Shopping.App.Services
             _productRepository = productRepository;
         }
 
-        public List<Product> GetAllProducts()
+        public List<ProductDTO> GetAllProducts()
         {
-            return _productRepository.GetAllProducts();
+            var products = _productRepository.GetAllProducts();
+            return MapProductToDTO(products);
         }
 
         public List<ProductDTO> GetProductsByCustomerId(int customerId)
         {
-            return _productRepository.GetProductsByCustomerId(customerId);
+            var products =  _productRepository.GetProductsByCustomerId(customerId);
+            return MapProductToDTO(products);
         }
 
         public bool CheckForProduct(int productId)
         {
             return _productRepository.CheckForProduct(productId);
+        }
+
+        public List<ProductDTO> MapProductToDTO(List<Product> products)
+        {
+            var productDtos = new List<ProductDTO>();
+            foreach (var product in products)
+            {
+                var productDto = new ProductDTO(product.ProductId, product.ProductName, product.ProductPrice);
+                productDtos.Add(productDto);
+            }
+            return productDtos;
         }
     }
 }

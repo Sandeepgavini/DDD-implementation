@@ -28,7 +28,9 @@ namespace Shopping.API.Controllers
         {
             var customer = _customerService.GetCustomerDetails(customerIdentifier);
             if (customer == null)
+            {
                 return NotFound();
+            }
             return Ok(customer);
         }
 
@@ -46,7 +48,9 @@ namespace Shopping.API.Controllers
         {
             var customer = _customerService.AddProductToCustomer(customerId, productName,productPrice);
             if (customer == null)
+            {
                 return BadRequest();
+            }
             return Ok(customer);
         }
        

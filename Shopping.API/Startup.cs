@@ -62,14 +62,14 @@ namespace Shopping.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopping.API", Version = "v1" });
             });
 
-          // Using Scrutor to configure services from the Assembly
+            // Using Scrutor to configure services from the Assembly
             services.Scan(scan => scan
             .FromAssemblies(ShoppingDomain.Assembly,
             ShoppingApplication.Assembly,
             ShoppingInfrastructure.Assembly)
             .AddClasses()
             .AsImplementedInterfaces()
-            .WithScopedLifetime()
+            .WithTransientLifetime()
             );
 
             // Activating CORs for the API

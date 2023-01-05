@@ -26,7 +26,7 @@ namespace Shopping.Infrastructure.Repositories
 
         public Customer GetCustomerById(int customerId)
         {
-            var customer = _shoppingContext.Customers.Where(customer => customer.CustomerId == customerId).Include(customer=>customer.Products).AsNoTracking().FirstOrDefault();
+            var customer = _shoppingContext.Customers.Where(customer => customer.CustomerId == customerId).Include(customer=>customer.Products).FirstOrDefault();
             return customer;
         }
 
@@ -42,7 +42,9 @@ namespace Shopping.Infrastructure.Repositories
         {
             var customer = GetCustomerById(customerId);
             if (customer == null)
+            {
                 return null;
+            }
             customer.AddProduct(productName,productPrice);
             _shoppingContext.Customers.Update(customer);
             _shoppingContext.SaveChanges();

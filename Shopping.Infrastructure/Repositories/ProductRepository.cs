@@ -17,16 +17,9 @@ namespace Shopping.Infrastructure.Repositories
             _shoppingContext = shoppingContext;
         }
 
-        public List<ProductDTO> GetProductsByCustomerId(int customerId)
+        public List<Product> GetProductsByCustomerId(int customerId)
         {
-            var products = _shoppingContext.Products.Where(x => x.Customer.CustomerId == customerId).ToList();
-            var productDtos = new List<ProductDTO>();
-            foreach (var product in products)
-            {
-                var productDto = new ProductDTO(product.ProductId, product.ProductName, product.ProductPrice);
-                productDtos.Add(productDto);
-            }
-            return productDtos;
+           return _shoppingContext.Products.Where(x => x.Customer.CustomerId == customerId).ToList();
         }
 
         public List<Product> GetAllProducts()

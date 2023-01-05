@@ -8,6 +8,6 @@ namespace Shopping.Domain.Repository
     {
         List<Product> GetAllProducts();
         bool CheckForProduct(int productId);
-        List<ProductDTO> GetProductsByCustomerId(int customerId);
+        List<Product> GetProductsByCustomerId(int customerId);
     }
 }
