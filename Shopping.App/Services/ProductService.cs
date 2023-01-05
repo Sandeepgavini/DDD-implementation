@@ -18,6 +18,7 @@ namespace Shopping.App.Services
         {
             return _productRepository.GetAllProducts();
         }
+
         public List<ProductDTO> GetProductsByCustomerId(int customerId)
         {
             return _productRepository.GetProductsByCustomerId(customerId);

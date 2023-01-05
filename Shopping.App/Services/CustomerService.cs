@@ -8,6 +8,7 @@ namespace Shopping.App.Services
     public class CustomerService : ICustomerService
     {
         private  ICustomerRepository _customerRepository;
+        
         public CustomerService(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
@@ -31,7 +32,8 @@ namespace Shopping.App.Services
             }
             
         }
-        public Customer AddCustomer( string customerName)
+        
+        public Customer AddCustomer(string customerName)
         {
             return _customerRepository.AddCustomer(customerName);
         }

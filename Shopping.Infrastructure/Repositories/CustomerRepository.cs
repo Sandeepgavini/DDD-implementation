@@ -1,6 +1,4 @@
-﻿using Castle.Core.Resource;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Shopping.Domain.Entities;
 using Shopping.Domain.Repository;
 using Shopping.Infrastructure.Context;
@@ -14,6 +12,7 @@ namespace Shopping.Infrastructure.Repositories
     public class CustomerRepository:ICustomerRepository
     {
         private readonly ShoppingContext _shoppingContext;
+
         public CustomerRepository(ShoppingContext shoppingContext)
         {
             _shoppingContext = shoppingContext;
@@ -24,6 +23,7 @@ namespace Shopping.Infrastructure.Repositories
             var records = _shoppingContext.Customers.Include(customer=>customer.Products).ToList();
             return records;
         }
+
         public Customer GetCustomerById(int customerId)
         {
             var customer = _shoppingContext.Customers.Where(customer => customer.CustomerId == customerId).Include(customer=>customer.Products).AsNoTracking().FirstOrDefault();

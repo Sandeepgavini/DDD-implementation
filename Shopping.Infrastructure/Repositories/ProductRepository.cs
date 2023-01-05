@@ -17,7 +17,6 @@ namespace Shopping.Infrastructure.Repositories
             _shoppingContext = shoppingContext;
         }
 
-     
         public List<ProductDTO> GetProductsByCustomerId(int customerId)
         {
             var products = _shoppingContext.Products.Where(x => x.Customer.CustomerId == customerId).ToList();
@@ -34,6 +33,7 @@ namespace Shopping.Infrastructure.Repositories
         {
             return _shoppingContext.Products.Include(x=>x.Customer).ToList();
         }
+
         public bool CheckForProduct(int productId)
         {
             return _shoppingContext.Products.FirstOrDefault(x => x.ProductId == productId) == null;

@@ -14,13 +14,14 @@ namespace Shopping.API.Controllers
         {
             _customerService = customerService;
         }
+
         [HttpGet]
         public IActionResult GetAllCustomers()
         {
             var customers = _customerService.GetAllCustomers();
             return Ok(customers);
-
         }
+
         [Route("{customerIdentifier}")]
         [HttpGet]
         public IActionResult GetCustomerDetails([FromRoute] string customerIdentifier)
@@ -30,6 +31,7 @@ namespace Shopping.API.Controllers
                 return NotFound();
             return Ok(customer);
         }
+
         [Route("{customerName}")]
         [HttpPost]
         public IActionResult AddCustomer( [FromRoute]string customerName)
@@ -37,6 +39,7 @@ namespace Shopping.API.Controllers
             var customer = _customerService.AddCustomer( customerName);  
             return Ok(customer);
         }
+
         [Route("{customerId}/{productName}/{productPrice}")]
         [HttpPost]
         public IActionResult AddProductToCustomer([FromRoute]int customerId, [FromRoute] string productName,[FromRoute] double productPrice)

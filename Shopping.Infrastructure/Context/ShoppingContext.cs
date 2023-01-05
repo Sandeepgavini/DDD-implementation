@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shopping.Domain.Entities;
-using Shopping.Infrastructure.Configurations;
 
 namespace Shopping.Infrastructure.Context
 {
@@ -17,8 +16,6 @@ namespace Shopping.Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShoppingContext).Assembly);
         }
       

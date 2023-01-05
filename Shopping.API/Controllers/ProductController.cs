@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shopping.App.Services;
-using Shopping.Domain.Entities;
 
 namespace Shopping.API.Controllers
 {
@@ -10,15 +8,18 @@ namespace Shopping.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
+
         public ProductController(IProductService productService)
         {
             _productService = productService;
         }
+
         [HttpGet]
         public IActionResult GetAllProducts() {
             var products = _productService.GetAllProducts();
             return Ok(products);
         }
+
         [HttpGet("{customerId}")]
         public IActionResult GetProduct([FromRoute]int customerId)
         {

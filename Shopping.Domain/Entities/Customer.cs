@@ -1,6 +1,4 @@
-﻿using Shopping.Domain.DTO;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Shopping.Domain.Entities
 {
@@ -10,10 +8,11 @@ namespace Shopping.Domain.Entities
         public string CustomerName { get; private set; }
         public List<Product> Products { get; set; }
         public double TotalBill { get; private set; } 
-       public Customer() { }
+        
+        public Customer() { }
+        
         public Customer(string customerName)
         {
-           
             CustomerName = customerName;
             TotalBill = 0;
         }
@@ -23,6 +22,7 @@ namespace Shopping.Domain.Entities
             var product = new Product(productName, productPrice);
             TotalBill += product.ProductPrice;
         }
+
         public void AddProductsToList(List<Product> products)
         {
             Products = products;
