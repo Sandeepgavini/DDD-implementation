@@ -46,7 +46,7 @@ namespace Shopping.API.Controllers
         }
 
 
-        [Route("{customerId}")]
+        [Route("AddProduct/{customerId}")]
         [HttpPost]
         public IActionResult AddProductToCustomer([FromRoute]int customerId, [FromBody] ProductDTO product)
         {
