@@ -62,6 +62,10 @@ namespace Shopping.API.Controllers
         public IActionResult UpdateCustomerInfo([FromRoute] int customerId, [FromBody] CustomerDTO customer)
         {
             var newCustomer = _customerService.UpdateCustomerInfo(customerId, customer);
+            if(newCustomer == null)
+            {
+                return BadRequest(Constants.NOUSER);
+            }
             return Ok(newCustomer);
         }
 

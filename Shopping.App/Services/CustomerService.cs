@@ -32,7 +32,8 @@ namespace Shopping.App.Services
 
         public CustomerDTO UpdateCustomerInfo(int customerId,CustomerDTO customer)
         {
-            return MapCustomerToDTO(_customerRepository.UpdateCustomerInfo(customerId,MapDTOToCustomer(customer)));
+            var updatedCustomer = _customerRepository.UpdateCustomerInfo(customerId, MapDTOToCustomer(customer));
+            return updatedCustomer != null?MapCustomerToDTO(updatedCustomer):null;
         }
         
         public bool DeleteCustomer(int customerId)

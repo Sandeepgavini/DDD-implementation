@@ -48,6 +48,10 @@ namespace Shopping.Infrastructure.Repositories
         public Customer UpdateCustomerInfo(int customerId, Customer customerInfo)
         {
             var customer = GetCustomerById(customerId);
+            if (customer == null)
+            {
+                return null;
+            }
             customer.CustomerNumber = customerInfo.CustomerNumber;
             _shoppingContext.SaveChanges();
             return customer;
