@@ -14,16 +14,14 @@ namespace Shopping.App.Services
             _productRepository = productRepository;
         }
 
-        public List<ProductViewDTO> GetAllProducts()
+        public List<Product> GetAllProducts()
         {
-            var products = _productRepository.GetAllProducts();
-            return MapProductViewToDTO(products);
+            return _productRepository.GetAllProducts();
         }
 
-        public List<ProductDTO> GetProductsByCustomerId(int customerId)
+        public Product GetProductDetails(string productName)
         {
-            var products =  _productRepository.GetProductsByCustomerId(customerId);
-            return MapProductToDTO(products);
+            return _productRepository.GetProductDetails(productName);
         }
 
         public bool CheckForProduct(int productId)
@@ -31,26 +29,9 @@ namespace Shopping.App.Services
             return _productRepository.CheckForProduct(productId);
         }
 
-        public List<ProductDTO> MapProductToDTO(List<Product> products)
+        public Product AddNewProduct(Product product)
         {
-            var productDtos = new List<ProductDTO>();
-            foreach (var product in products)
-            {
-                var productDto = new ProductDTO(product.ProductId, product.ProductName, product.ProductPrice);
-                productDtos.Add(productDto);
-            }
-            return productDtos;
-        }
-
-        public List<ProductViewDTO> MapProductViewToDTO(List<Product> products)
-        {
-            var productViewDtos = new List<ProductViewDTO>();
-            foreach (var product in products)
-            {
-                var productDto = new ProductViewDTO(product.CustomerId, product.Customer.CustomerName,product.ProductId, product.ProductName, product.ProductPrice);
-                productViewDtos.Add(productDto);
-            }
-            return productViewDtos;
+            return _productRepository.AddNewProduct(product);
         }
     }
 }

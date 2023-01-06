@@ -10,7 +10,6 @@ namespace Shopping.Domain.Repository
          Customer AddCustomer(Customer customer);
          Customer UpdateCustomerInfo(int customerId,Customer customerInfo);
          bool DeleteCustomer(int customerId);
-         Customer AddProductToCustomer(int customerId, Product product);
          List<Customer> GetAllCustomers();
          Customer GetCustomerById(int customerId);
          Customer GetCustomerByFilter(Expression<Func<Customer, bool>> predicate);

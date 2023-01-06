@@ -7,6 +7,7 @@ namespace Shopping.Domain.Repository
     {
         List<Product> GetAllProducts();
         bool CheckForProduct(int productId);
-        List<Product> GetProductsByCustomerId(int customerId);
+        Product GetProductDetails(string productName);
+        Product AddNewProduct(Product product);
     }
 }

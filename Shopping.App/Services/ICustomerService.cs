@@ -10,7 +10,6 @@ namespace Shopping.App.Services
         Customer AddCustomer( CustomerDTO customer);
         CustomerDTO UpdateCustomerInfo(int customerId,CustomerDTO customer);
         bool DeleteCustomer(int customerId);
-        Customer AddProductToCustomer(int customerId, ProductDTO product);
         List<CustomerDTO> GetAllCustomers();
         CustomerDTO GetCustomerDetails(string customerName,int customerId);
     }

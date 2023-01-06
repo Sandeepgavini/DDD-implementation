@@ -44,19 +44,6 @@ namespace Shopping.API.Controllers
             return Ok(newCustomer);
         }
 
-
-        [Route("AddProduct/{customerId}")]
-        [HttpPost]
-        public IActionResult AddProductToCustomer([FromRoute]int customerId, [FromBody] ProductDTO product)
-        {
-            var customer = _customerService.AddProductToCustomer(customerId, product);
-            if (customer == null)
-            {
-                return BadRequest(Constants.NOUSER);
-            }
-            return Ok(customer);
-        }
-
         [Route("Update/{customerId}")]
         [HttpPut]
         public IActionResult UpdateCustomerInfo([FromRoute] int customerId, [FromBody] CustomerDTO customer)

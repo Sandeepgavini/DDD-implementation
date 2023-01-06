@@ -20,27 +20,19 @@ namespace Shopping.Infrastructure.Repositories
 
         public List<Customer> GetAllCustomers()
         {
-            var records = _shoppingContext.Customers.Include(customer=>customer.Products).ToList();
+            var records = _shoppingContext.Customers.ToList();
             return records;
         }
 
         public Customer GetCustomerById(int customerId)
         {
-            var customer = _shoppingContext.Customers.Where(customer => customer.CustomerId == customerId).Include(customer=>customer.Products).FirstOrDefault();
+            var customer = _shoppingContext.Customers.Where(customer => customer.CustomerId == customerId).FirstOrDefault();
             return customer;
         }
 
         public Customer AddCustomer(Customer customer)
         {
             _shoppingContext.Customers.Add(customer);
-            _shoppingContext.SaveChanges();
-            return customer;
-        }
-
-        public Customer AddProductToCustomer(int customerId, Product product)
-        {
-            var customer = GetCustomerById(customerId);
-            customer.AddProductsToList(product);
             _shoppingContext.SaveChanges();
             return customer;
         }
@@ -71,7 +63,7 @@ namespace Shopping.Infrastructure.Repositories
 
         public Customer GetCustomerByFilter(Expression<Func<Customer, bool>> predicate)
         {
-            return _shoppingContext.Customers.Where(predicate).Include(customer => customer.Products).FirstOrDefault();
+            return _shoppingContext.Customers.Where(predicate).FirstOrDefault();
         }
     }
 }

@@ -1,26 +1,26 @@
-﻿namespace Shopping.Domain.Entities
+﻿using System;
+
+namespace Shopping.Domain.Entities
 {
     public class Product
     {
         public int ProductId { get; set; }
         public string ProductName { get;  set; }
         public double ProductPrice { get;  set; }
-        public Customer Customer { get; set; }  
-        public int CustomerId { get; set; }
+        public int Quantity { get; set; }
 
         public Product() { }
 
-        public Product(string productName, double productPrice)
+        public Product(string productName, double productPrice,int quantity)
         {
             ProductName = productName;
             ProductPrice = productPrice;
+            Quantity = quantity;
         }
 
-        public Product(string productName, double productPrice,Customer customer)
+        public void UpdateProductQuantity(int quantity)
         {
-            ProductName = productName;
-            ProductPrice = productPrice;
-            Customer = customer;
+            Quantity += quantity;
         }
     }
 }

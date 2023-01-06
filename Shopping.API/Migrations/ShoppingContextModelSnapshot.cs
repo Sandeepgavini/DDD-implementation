@@ -19,6 +19,28 @@ namespace Shopping.API.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Shopping.Domain.Entities.Cart", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalBill")
+                        .HasColumnType("float");
+
+                    b.HasKey("CustomerId", "ProductId");
+
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
+
+                    b.ToTable("ShoppingCart");
+                });
+
             modelBuilder.Entity("Shopping.Domain.Entities.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
@@ -37,14 +59,6 @@ namespace Shopping.API.Migrations
                     b.Property<string>("CustomerNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Discount")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalBill")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("float")
-                        .HasDefaultValue(0.0);
-
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
@@ -57,7 +71,10 @@ namespace Shopping.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CartCustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CartProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductName")
@@ -67,27 +84,42 @@ namespace Shopping.API.Migrations
                     b.Property<double>("ProductPrice")
                         .HasColumnType("float");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CartCustomerId", "CartProductId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Shopping.Domain.Entities.Product", b =>
+            modelBuilder.Entity("Shopping.Domain.Entities.Cart", b =>
                 {
-                    b.HasOne("Shopping.Domain.Entities.Customer", "Customer")
-                        .WithMany("Products")
-                        .HasForeignKey("CustomerId")
+                    b.HasOne("Shopping.Domain.Entities.Customer", "Customers")
+                        .WithOne("Cart")
+                        .HasForeignKey("Shopping.Domain.Entities.Cart", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("Customers");
+                });
+
+            modelBuilder.Entity("Shopping.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("Shopping.Domain.Entities.Cart", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CartCustomerId", "CartProductId");
+                });
+
+            modelBuilder.Entity("Shopping.Domain.Entities.Cart", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Shopping.Domain.Entities.Customer", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Cart");
                 });
 #pragma warning restore 612, 618
         }

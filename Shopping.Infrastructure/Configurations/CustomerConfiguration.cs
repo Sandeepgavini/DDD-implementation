@@ -11,7 +11,6 @@ namespace Shopping.Infrastructure.Configurations
             builder.ToTable("Customers");
             builder.HasKey(x => x.CustomerId);
             builder.Property(x => x.CustomerName).HasDefaultValue("Mathew Arnold");
-            builder.Property(x => x.TotalBill).HasDefaultValue(0);
         }
     }
 }

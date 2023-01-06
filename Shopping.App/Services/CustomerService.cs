@@ -41,16 +41,6 @@ namespace Shopping.App.Services
             return _customerRepository.DeleteCustomer(customerId);
         }
 
-        public Customer AddProductToCustomer(int customerId, ProductDTO product)
-        {
-            return _customerRepository.AddProductToCustomer(customerId, MapDTOToProduct(product));
-        }
-
-        public Product MapDTOToProduct(ProductDTO productDto)
-        {
-            var product = new Product(productDto.ProductName, productDto.ProductPrice);
-            return product;
-        }
 
         public Customer MapDTOToCustomer(CustomerDTO customerDto)
         {
@@ -63,7 +53,7 @@ namespace Shopping.App.Services
             var customerDtos = new List<CustomerDTO>();
             foreach(var customer in customers)
             {
-                var customerDto = new CustomerDTO(customer.CustomerId, customer.CustomerName,customer.CustomerNumber, customer.TotalBill);
+                var customerDto = new CustomerDTO(customer.CustomerId, customer.CustomerName,customer.CustomerNumber);
                 customerDtos.Add(customerDto);
             }
             return customerDtos;
@@ -71,7 +61,7 @@ namespace Shopping.App.Services
 
         public CustomerDTO MapCustomerToDTO(Customer customer)
         {
-            return new CustomerDTO(customer.CustomerId, customer.CustomerName,customer.CustomerNumber, customer.TotalBill);
+            return new CustomerDTO(customer.CustomerId, customer.CustomerName,customer.CustomerNumber);
         }
     }
 }

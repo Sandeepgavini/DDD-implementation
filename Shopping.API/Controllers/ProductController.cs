@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopping.App.Services;
+using Shopping.Domain.Entities;
 
 namespace Shopping.API.Controllers
 {
@@ -20,11 +21,20 @@ namespace Shopping.API.Controllers
             return Ok(products);
         }
 
-        [HttpGet("{customerId}")]
-        public IActionResult GetProduct([FromRoute]int customerId)
+        [Route("{productName}/GetProductInfo")]
+        [HttpGet]
+        public IActionResult GetProduct([FromRoute]string productName)
         {
-            var product = _productService.GetProductsByCustomerId(customerId);
-            return Ok(product);
+            var product = _productService.GetProductDetails(productName);
+            return product!=null ? Ok(product): BadRequest(Constants.NOPRODUCT);
+        }
+
+        [Route("AddProduct")]
+        [HttpPost]
+        public IActionResult AddNewProduct([FromBody] Product product)
+        {
+            var newProduct = _productService.AddNewProduct(product);
+            return Ok(newProduct);
         }
     }
 }

@@ -17,19 +17,26 @@ namespace Shopping.Infrastructure.Repositories
             _shoppingContext = shoppingContext;
         }
 
-        public List<Product> GetProductsByCustomerId(int customerId)
+        public Product GetProductDetails(string productName)
         {
-           return _shoppingContext.Products.Where(x => x.Customer.CustomerId == customerId).ToList();
+           return _shoppingContext.Products.Where(x => x.ProductName == productName).FirstOrDefault();
         }
 
         public List<Product> GetAllProducts()
         {
-            return _shoppingContext.Products.Include(x=>x.Customer).ToList();
+            return _shoppingContext.Products.ToList();
         }
 
         public bool CheckForProduct(int productId)
         {
-            return _shoppingContext.Products.FirstOrDefault(x => x.ProductId == productId) == null;
+            return _shoppingContext.Products.FirstOrDefault(x => x.ProductId == productId).Quantity > 0;
+        }
+
+        public Product AddNewProduct(Product product)
+        {
+            _shoppingContext.Products.Add(product);
+            _shoppingContext.SaveChanges();
+            return product;
         }
     }
 }

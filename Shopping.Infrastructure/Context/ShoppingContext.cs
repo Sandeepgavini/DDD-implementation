@@ -14,6 +14,8 @@ namespace Shopping.Infrastructure.Context
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Cart> ShoppingCart { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShoppingContext).Assembly);
