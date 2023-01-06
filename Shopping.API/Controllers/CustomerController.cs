@@ -2,7 +2,6 @@
 using Shopping.App.Services;
 using Shopping.Domain.Common;
 using Shopping.Domain.DTO;
-using Shopping.Domain.Entities;
 
 namespace Shopping.API.Controllers
 {
@@ -25,14 +24,14 @@ namespace Shopping.API.Controllers
             return Ok(customers);
         }
 
-        [Route("{customerIdentifier}")]
+        [Route("{customerName}")]
         [HttpGet]
-        public IActionResult GetCustomerDetails([FromRoute] string customerIdentifier)
+        public IActionResult GetCustomerDetails([FromRoute]string customerName,int customerId)
         {
-            var customer = _customerService.GetCustomerDetails(customerIdentifier);
+            var customer = _customerService.GetCustomerDetails(customerName,customerId);
             if (customer == null)
             {
-                return NotFound(Constant.NOUSER);
+                return NotFound(Constants.NOUSER);
             }
             return Ok(customer);
         }
@@ -53,7 +52,7 @@ namespace Shopping.API.Controllers
             var customer = _customerService.AddProductToCustomer(customerId, product);
             if (customer == null)
             {
-                return BadRequest(Constant.NOUSER);
+                return BadRequest(Constants.NOUSER);
             }
             return Ok(customer);
         }
@@ -73,9 +72,9 @@ namespace Shopping.API.Controllers
             var isDeleted = _customerService.DeleteCustomer(customerId);
             if (!isDeleted)
             {
-                return BadRequest(Constant.NOUSER);
+                return BadRequest(Constants.NOUSER);
             }
-            return Ok();
+            return Ok(Constants.DELETESUCESS);
         }
     }
 }

@@ -41,7 +41,6 @@ namespace Shopping.Infrastructure.Repositories
         {
             var customer = GetCustomerById(customerId);
             customer.AddProductsToList(product);
-            _shoppingContext.Customers.Update(customer);
             _shoppingContext.SaveChanges();
             return customer;
         }
@@ -50,7 +49,6 @@ namespace Shopping.Infrastructure.Repositories
         {
             var customer = GetCustomerById(customerId);
             customer.CustomerNumber = customerInfo.CustomerNumber;
-            _shoppingContext.Customers.Update(customer);
             _shoppingContext.SaveChanges();
             return customer;
         }

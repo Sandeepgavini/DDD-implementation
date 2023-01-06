@@ -54,8 +54,7 @@ namespace Shopping.API
             });
             services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
 
-            services.AddControllers().AddNewtonsoftJson(options=>
-            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddControllers();
             
             services.AddSwaggerGen(c =>
             {

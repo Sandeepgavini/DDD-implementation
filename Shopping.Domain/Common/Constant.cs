@@ -10,6 +10,5 @@ namespace Shopping.Domain.Common
     {
         public static double TCD = 0.25;
         public static double FCD = 0.5;
-        public static string NOUSER = "No such found";
     }
 }
