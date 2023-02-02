@@ -11,6 +11,6 @@ namespace Shopping.App.Services
         CustomerDTO UpdateCustomerInfo(int customerId,CustomerDTO customer);
         bool DeleteCustomer(int customerId);
         List<CustomerDTO> GetAllCustomers();
-        CustomerDTO GetCustomerDetails(string customerName,int customerId);
+        Customer GetCustomerDetails(string customerName,int customerId);
     }
 }

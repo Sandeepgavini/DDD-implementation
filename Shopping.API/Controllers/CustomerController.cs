@@ -11,10 +11,12 @@ namespace Shopping.API.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
+        private readonly ICartService _cartService;
 
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ICustomerService customerService,ICartService cartService)
         {
             _customerService = customerService;
+            _cartService = cartService;
         }
 
         [HttpGet]
@@ -42,6 +44,18 @@ namespace Shopping.API.Controllers
         {
             var newCustomer = _customerService.AddCustomer( customer);  
             return Ok(newCustomer);
+        }
+
+        [Route("AddProduct/{customerId})")]
+        [HttpPost]
+        public IActionResult AddProductToCustomer([FromRoute]int customerId,[FromBody]ProductDTO product)
+        {
+            var cart = _cartService.AddProductToCart(customerId, product);
+            if(cart == null)
+            {
+                return BadRequest(Constants.NOPRODUCT);
+            }
+            return Ok(cart);
         }
 
         [Route("Update/{customerId}")]

@@ -10,8 +10,8 @@ using Shopping.Infrastructure.Context;
 namespace Shopping.API.Migrations
 {
     [DbContext(typeof(ShoppingContext))]
-    [Migration("20230106140351_new-setup")]
-    partial class newsetup
+    [Migration("20230109125151_Setup")]
+    partial class Setup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,19 +23,21 @@ namespace Shopping.API.Migrations
 
             modelBuilder.Entity("Shopping.Domain.Entities.Cart", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<double>("TotalBill")
                         .HasColumnType("float");
 
-                    b.HasKey("CustomerId", "ProductId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CustomerId")
                         .IsUnique();
@@ -73,10 +75,7 @@ namespace Shopping.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CartCustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CartProductId")
+                    b.Property<int?>("CartId")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductName")
@@ -91,27 +90,29 @@ namespace Shopping.API.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("CartCustomerId", "CartProductId");
+                    b.HasIndex("CartId");
 
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Shopping.Domain.Entities.Cart", b =>
                 {
-                    b.HasOne("Shopping.Domain.Entities.Customer", "Customers")
+                    b.HasOne("Shopping.Domain.Entities.Customer", "Customer")
                         .WithOne("Cart")
                         .HasForeignKey("Shopping.Domain.Entities.Cart", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customers");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Shopping.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("Shopping.Domain.Entities.Cart", null)
+                    b.HasOne("Shopping.Domain.Entities.Cart", "Cart")
                         .WithMany("Products")
-                        .HasForeignKey("CartCustomerId", "CartProductId");
+                        .HasForeignKey("CartId");
+
+                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("Shopping.Domain.Entities.Cart", b =>

@@ -9,5 +9,6 @@ namespace Shopping.Domain.Repository
         bool CheckForProduct(int productId);
         Product GetProductDetails(string productName);
         Product AddNewProduct(Product product);
+        Product UpdateProductQuantity(string productName, int quantity);
     }
 }

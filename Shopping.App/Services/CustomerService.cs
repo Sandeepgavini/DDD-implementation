@@ -20,9 +20,9 @@ namespace Shopping.App.Services
             return MapCustomersToDTO(_customerRepository.GetAllCustomers());
         }
 
-        public CustomerDTO GetCustomerDetails(string customerName ,int customerId=0)
+        public Customer GetCustomerDetails(string customerName ,int customerId=0)
         {
-                return MapCustomerToDTO(_customerRepository.GetCustomerByFilter(x=>x.CustomerId == customerId ||x.CustomerName == customerName));
+                return _customerRepository.GetCustomerByFilter(x=>x.CustomerId == customerId ||x.CustomerName == customerName);
         }
         
         public Customer AddCustomer(CustomerDTO customer)

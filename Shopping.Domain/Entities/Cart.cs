@@ -1,35 +1,38 @@
 ﻿using Shopping.Domain.Common;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shopping.Domain.Entities
 {
     public class Cart
     {
-        public int ProductId { get; set; }
-        public int CartId { get; set; }
-        public List<Product> Products { get; set; }
-        public double TotalBill { get; set; }
+        public int Id { get; set; }
         public int CustomerId { get; set; }
-        public Customer Customers { get; set; }  
+        public int ProductId { get; set; }
+        public double TotalBill { get; set; }
+        public Customer Customer { get; set; }
+        public List<Product> Products { get; set; }
 
         public Cart() { }
 
-        public Cart(int customerId, int productId)
+        public Cart(int customerId)
         {
             CustomerId = customerId;
-            ProductId = productId;
-            TotalBill = 0;
             Products = new List<Product>();
-            CustomerId = customerId;
-            ProductId = productId;
+            TotalBill = 0;
         }
 
-        public void AddProductToCustomer(Product product)
+        public Cart(Customer customer)
         {
-            TotalBill += product.ProductPrice;
-            CheckoutDiscount();
+            Customer = customer;
+            CustomerId = customer.CustomerId;
+            TotalBill = 0;
+        }
+
+        public void AddProductToCustomer(Product product,int quantity)
+        {
             Products.Add(product);
+            TotalBill += product.ProductPrice * quantity;
+            CheckoutDiscount();
         }
 
         public void CheckoutDiscount()

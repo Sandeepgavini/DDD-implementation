@@ -7,8 +7,12 @@ namespace Shopping.App.Services
     public interface IProductService
     {
         bool CheckForProduct(int productId);
-        List<Product> GetAllProducts();
-        Product GetProductDetails(string productName);
-        Product AddNewProduct(Product product);
+        List<ProductViewDTO> GetAllProducts();
+        ProductViewDTO GetProductDetails(string productName);
+        ProductViewDTO AddNewProduct(ProductViewDTO product);
+        ProductViewDTO UpdateProductQuantity(string productName,int quantity);
+        Product MapProductViewToProduct(ProductViewDTO productView);
+        ProductViewDTO MapProductToProductView(Product product);
+        List<ProductViewDTO> MapProductsToProductView(List<Product> products);
     }
 }

@@ -26,13 +26,16 @@ namespace Shopping.Infrastructure.Repositories
 
         public Customer GetCustomerById(int customerId)
         {
-            var customer = _shoppingContext.Customers.Where(customer => customer.CustomerId == customerId).FirstOrDefault();
+            var customer = _shoppingContext.Customers.Where(customer => customer.CustomerId == customerId).Include(customer => customer.Cart).FirstOrDefault();
             return customer;
         }
 
         public Customer AddCustomer(Customer customer)
         {
             _shoppingContext.Customers.Add(customer);
+            // Adding new Cart whenever a new customer is added
+            var cart = new Cart(customer);
+            _shoppingContext.ShoppingCart.Add(cart);
             _shoppingContext.SaveChanges();
             return customer;
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopping.App.Services;
+using Shopping.Domain.DTO;
 using Shopping.Domain.Entities;
 
 namespace Shopping.API.Controllers
@@ -31,10 +32,22 @@ namespace Shopping.API.Controllers
 
         [Route("AddProduct")]
         [HttpPost]
-        public IActionResult AddNewProduct([FromBody] Product product)
+        public IActionResult AddNewProduct([FromBody] ProductViewDTO product)
         {
             var newProduct = _productService.AddNewProduct(product);
             return Ok(newProduct);
+        }
+
+        [Route("UpdateQuantity/{productName}")]
+        [HttpPut]
+        public IActionResult UpdateProductQuantity([FromRoute]string productName, [FromQuery]int quantity)
+        {
+            var product = _productService.UpdateProductQuantity(productName, quantity);
+            if(product == null)
+            {
+                return BadRequest(Constants.NOPRODUCT);
+            }
+            return Ok(product);
         }
     }
 }

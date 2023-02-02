@@ -13,6 +13,8 @@ namespace Shopping.Infrastructure.Configurations
             builder.Property(x => x.ProductName).IsRequired();
             builder.Property(x => x.ProductPrice).IsRequired();
             builder.Property(x => x.Quantity).IsRequired();
+            builder.HasOne(p => p.Cart)
+                .WithMany(c => c.Products);
         }
     }
 }

@@ -29,12 +29,30 @@ namespace Shopping.Infrastructure.Repositories
 
         public bool CheckForProduct(int productId)
         {
-            return _shoppingContext.Products.FirstOrDefault(x => x.ProductId == productId).Quantity > 0;
+            var product = _shoppingContext.Products.FirstOrDefault(x => x.ProductId == productId);
+            if(product == null)
+            {
+                return false;
+            }
+            return product.Quantity > 0;
+
         }
 
         public Product AddNewProduct(Product product)
         {
             _shoppingContext.Products.Add(product);
+            _shoppingContext.SaveChanges();
+            return product;
+        }
+
+        public Product UpdateProductQuantity(string productName,int quantity)
+        {
+            var product = GetProductDetails(productName);
+            if(product == null)
+            {
+                return null;
+            }
+            product.Quantity = quantity;
             _shoppingContext.SaveChanges();
             return product;
         }

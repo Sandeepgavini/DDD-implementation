@@ -11,11 +11,10 @@ namespace Shopping.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Cart> builder)
         {
             builder.ToTable("ShoppingCart");
-            builder.HasKey(cart => new {cart.CustomerId,cart.ProductId});
-            builder.HasMany(x => x.Products);
-            builder.HasOne(x => x.Customers)
-                .WithOne(c => c.Cart)
-                .HasForeignKey<Cart>(cart => cart.CustomerId); ;
+            builder.HasKey(cart => cart.Id);
+            builder.HasOne(cart => cart.Customer)
+                .WithOne(customer => customer.Cart)
+                .HasForeignKey<Cart>(cart=>cart.CustomerId);
         }
     }
 }
